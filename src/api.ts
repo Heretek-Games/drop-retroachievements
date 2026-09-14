@@ -137,7 +137,7 @@ export async function saveKnownAchievements(
 ): Promise<string[]> {
   const known = await loadKnownAchievements(storage, username, gameId);
   for (const key of newKeys) known.add(key);
-  const merged = [...known].sort();
+  const merged = [...known].sort((a, b) => a.localeCompare(b));
   await storage.set(knownAchievementsKey(username, gameId), merged);
   return merged;
 }

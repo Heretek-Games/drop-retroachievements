@@ -1,11 +1,17 @@
-import type { PluginContext, ServerPlugin } from "@droposs/plugin-sdk";
+import type {
+  PluginContext,
+  PluginStorage,
+  ServerPlugin,
+} from "@droposs/plugin-sdk";
 import {
   newlyUnlocked,
   parseAchievements,
+  type UnlockEvent,
 } from "./achievements.js";
 import {
   type HttpFetch,
   type RaClientOptions,
+  type RaProgress,
   RA_CREDENTIALS_KEY,
   fetchGameProgress,
   loadKnownAchievements,
@@ -62,6 +68,37 @@ interface SyncBody {
   hash?: string;
   progress?: unknown;
   knownAchievements?: string[];
+}
+
+interface LiveSyncResult {
+  progress: RaProgress;
+  unlocks: UnlockEvent[];
+}
+
+async function collectLiveUnlocks(
+  storage: PluginStorage,
+  client: RaClientOptions,
+  body: SyncBody,
+): Promise<LiveSyncResult> {
+  const requestedId = Number(body.gameId ?? 0);
+  let gameId: number | null = null;
+  if (Number.isFinite(requestedId) && requestedId > 0) {
+    gameId = requestedId;
+  } else if (body.hash) {
+    gameId = await resolveGameId(client, body.hash);
+  }
+  if (!gameId) {
+    throw new Error(
+      "sync requires a numeric gameId or a hash that resolves to a game",
+    );
+  }
+  const progress = await fetchGameProgress(client, gameId);
+  const known = await loadKnownAchievements(
+    storage,
+    client.credentials.username,
+    progress.gameId,
+  );
+  return { progress, unlocks: newlyUnlocked(known, progress.achievements) };
 }
 
 export interface RetroAchievementsPluginOptions {
@@ -137,25 +174,11 @@ export default class RetroAchievementsPlugin implements ServerPlugin {
           );
         }
         const client: RaClientOptions = { fetchFn, credentials };
-        const requestedId = Number(body.gameId ?? 0);
-        const gameId =
-          Number.isFinite(requestedId) && requestedId > 0
-            ? requestedId
-            : body.hash
-              ? await resolveGameId(client, body.hash)
-              : null;
-        if (!gameId) {
-          throw new Error(
-            "sync requires a numeric gameId or a hash that resolves to a game",
-          );
-        }
-        const progress = await fetchGameProgress(client, gameId);
-        const known = await loadKnownAchievements(
+        const { progress, unlocks } = await collectLiveUnlocks(
           ctx.storage,
-          credentials.username,
-          progress.gameId,
+          client,
+          body,
         );
-        const unlocks = newlyUnlocked(known, progress.achievements);
         await saveKnownAchievements(
           ctx.storage,
           credentials.username,
