@@ -1,0 +1,20 @@
+{
+  "id": "drop-retroachievements",
+  "name": "RetroAchievements Bridge",
+  "version": "0.1.0",
+  "description": "Maps ROM hashes to RetroAchievements achievement sets",
+  "author": "Heretek Games",
+  "apiVersion": 2,
+  "trust": "trusted",
+  "storageVersion": 1,
+  "capabilities": [
+    "routes",
+    "storage",
+    "network",
+    "events"
+  ],
+  "targets": [
+    "server"
+  ],
+  "entry": "dist/src/index.js"
+}
