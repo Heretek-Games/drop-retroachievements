@@ -4,12 +4,14 @@ import { MockPluginContext } from "@droposs/plugin-sdk";
 import type { RouteHandlerContext } from "@droposs/plugin-sdk";
 import Plugin, {
   type HttpFetch,
+  RA_USER_AGENT,
   newlyUnlocked,
   parseAchievements,
   parseEarned,
   parseGameSummary,
   parseGameProgress,
   parseResolvedGameId,
+  resolveGameId,
 } from "../src/index.js";
 
 const CAPABILITIES = ["routes", "storage", "network", "events"] as const;
@@ -325,4 +327,21 @@ test("credentials fall back to the environment when storage is empty", async () 
   await plugin.init(ctx);
   const config = await routeOf(ctx, "GET", "/config")({}, emptyContext);
   assert.deepEqual(config, { configured: true, username: "bob" });
+});
+
+test("resolveGameId sends the required User-Agent header", async () => {
+  const calls: Array<{ url: string; init?: RequestInit }> = [];
+  const fetchFn: HttpFetch = async (url, init) => {
+    calls.push({ url: String(url), init });
+    return new Response(JSON.stringify({ Success: true, GameID: 42 }), {
+      status: 200,
+    });
+  };
+
+  const gameId = await resolveGameId({ fetchFn }, "abc123");
+  assert.equal(gameId, 42);
+  assert.equal(
+    new Headers(calls[0].init?.headers).get("user-agent"),
+    RA_USER_AGENT,
+  );
 });

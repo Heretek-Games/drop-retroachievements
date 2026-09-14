@@ -9,6 +9,12 @@ export type HttpFetch = (
 export const RA_API_BASE = "https://retroachievements.org";
 export const RA_CREDENTIALS_KEY = "ra_credentials";
 
+/**
+ * RetroAchievements' Connect API docs require every request to send a
+ * User-Agent; some endpoints reject requests without one.
+ */
+export const RA_USER_AGENT = "drop-retroachievements/0.1.0 (+https://github.com/Heretek-Games/drop-retroachievements)";
+
 export interface RaCredentials {
   username: string;
   apiKey: string;
@@ -43,6 +49,7 @@ export async function resolveGameId(
 ): Promise<number | null> {
   const response = await options.fetchFn(
     `${RA_API_BASE}/dorequest.php?r=gameid&m=${encodeURIComponent(hash)}`,
+    { headers: { "User-Agent": RA_USER_AGENT } },
   );
   if (!response.ok) {
     throw new Error(
@@ -82,6 +89,7 @@ export async function fetchGameProgress(
   });
   const response = await options.fetchFn(
     `${RA_API_BASE}/API/API_GetGameInfoAndUserProgress.php?${params.toString()}`,
+    { headers: { "User-Agent": RA_USER_AGENT } },
   );
   if (!response.ok) {
     throw new Error(
