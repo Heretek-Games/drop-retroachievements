@@ -5,6 +5,7 @@ import type { RouteHandlerContext } from "@droposs/plugin-sdk";
 import Plugin, {
   type HttpFetch,
   RA_USER_AGENT,
+  fetchGameProgress,
   newlyUnlocked,
   parseAchievements,
   parseEarned,
@@ -340,6 +341,26 @@ test("resolveGameId sends the required User-Agent header", async () => {
 
   const gameId = await resolveGameId({ fetchFn }, "abc123");
   assert.equal(gameId, 42);
+  assert.equal(
+    new Headers(calls[0].init?.headers).get("user-agent"),
+    RA_USER_AGENT,
+  );
+});
+
+test("fetchGameProgress sends the required User-Agent header", async () => {
+  const calls: Array<{ url: string; init?: RequestInit }> = [];
+  const fetchFn: HttpFetch = async (url, init) => {
+    calls.push({ url: String(url), init });
+    return new Response(JSON.stringify(PROGRESS), { status: 200 });
+  };
+
+  await fetchGameProgress(
+    { fetchFn, credentials: { username: "alice", apiKey: "secret-key" } },
+    123,
+  );
+
+  assert.equal(calls.length, 1);
+  assert.ok(calls[0].url.includes("API_GetGameInfoAndUserProgress.php"));
   assert.equal(
     new Headers(calls[0].init?.headers).get("user-agent"),
     RA_USER_AGENT,
