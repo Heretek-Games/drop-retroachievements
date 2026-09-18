@@ -10,8 +10,9 @@ export const RA_API_BASE = "https://retroachievements.org";
 export const RA_CREDENTIALS_KEY = "ra_credentials";
 
 /**
- * RetroAchievements' Connect API docs require every request to send a
- * User-Agent; some endpoints reject requests without one.
+ * RetroAchievements endpoints block generic tool user-agents (e.g. curl/8.x
+ * return 403). We send an identifiable plugin User-Agent header per community
+ * and integration best practices.
  */
 export const RA_USER_AGENT = "drop-retroachievements/0.1.0 (+https://github.com/Heretek-Games/drop-retroachievements)";
 

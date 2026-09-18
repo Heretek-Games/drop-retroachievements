@@ -16,5 +16,35 @@
   "targets": [
     "server"
   ],
-  "entry": "dist/src/index.js"
+  "entry": "dist/src/index.js",
+  "checksum": "06ffe7e8efaf69666c6517588cc6403138cb2f5053f1488cc7fb8e9e4596624f",
+  "files": {
+    ".github/dependabot.yml": "fe156952d1952825377de8e48c90563a3ac19bb95a6e0ced8a2f498a0f20fdf6",
+    ".github/workflows/ci.yml": "60a33a67813097e4744a54b21d8af35e6c0254e56001123a69f34ccf65d1fa8b",
+    ".github/workflows/release.yml": "08a97b00cac41d321307cb894819c15d357300f950ec01cd51375a12e6604e10",
+    ".gitignore": "455edc14aa6727e0e1c9bf889ca4244f3334bfa8ee3b57af17cb83f9c395ea46",
+    ".sdk-scope.json": "02aa703354ff6c6a460d6dd0d9ddabd6ce88ec628f0f963b6afa58eaf601e30e",
+    "AGENTS.md": "f11df787961d10afacf3239c61683d63c4ad0cb87e1aa294c0a6fcf1a120c6de",
+    "CLAUDE.md": "3b2c8a6a80fe79fa9ee0680b86d2e84ce0b9255d3dc43eccd4e2fce59064c7da",
+    "dist/src/achievements.d.ts": "3b75c9719d0a1da03b753eed39b60f4898ce1e1fe369ae6653695f735885e5af",
+    "dist/src/achievements.js": "6f96912e5ff4b4769bbc5bf76689a7093e877d0d086034a34055a64427df6be5",
+    "dist/src/api.d.ts": "cadeb46af795357f6d997cd25ce0a3e3d4a11a32b14d93fb8837f7c599092646",
+    "dist/src/api.js": "a61c53aa98c795dffd0610cc9d1b28940c5762874b4ffacc20eeb406cbbe72eb",
+    "dist/src/index.d.ts": "08fb39b2d0058544f516ed0065f152dce30283d57c97ffdc982f731b47161d84",
+    "dist/src/index.js": "06ffe7e8efaf69666c6517588cc6403138cb2f5053f1488cc7fb8e9e4596624f",
+    "dist/test/retroachievements.test.d.ts": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "dist/test/retroachievements.test.js": "74be0d6adb182d6cf46d94f9419391b334922b759516ab8d3ac1d5f55b4afd44",
+    "eslint.config.mjs": "4cdf67d5a07b1a089d8f39e842a7de7532eb519752d60fe5ac706f42fb7bdc6f",
+    "GEMINI.md": "3b2c8a6a80fe79fa9ee0680b86d2e84ce0b9255d3dc43eccd4e2fce59064c7da",
+    "package-lock.json": "d9b43535375eb9f2289f4a401513386c5513f2305bf688884a507f3bde5a2837",
+    "package.json": "73739446a995f577ad3a4b0a9b9b38b7507357276de6c59065a60375eee5ef1d",
+    "README.md": "6ae2d2ac477a934d3179d83e1ff464408820c7669905464c600007207d08dd76",
+    "scripts/switch-sdk-scope.mjs": "cee6513f66458bb65746bb4c27d749f0ab7d28bdb09634acbdda5e8acf4bda5b",
+    "SECURITY.md": "1ed84c5e2293a1bda1e0d1650df39f5c03dba9a18ee6d8acff78cc10a6897d2d",
+    "src/achievements.ts": "14943c56ee691016d07c829f3fc09ef5545b63ed632ac5ffa6cb6a14d3261218",
+    "src/api.ts": "5a11a4bf6b77393b46fc4db36a93ec61a2f9576bf10a453beedb8d43094b1678",
+    "src/index.ts": "eb591c9819df0afeaa078c6f9a3d015fc55af81233ec841ac03e71c409f37add",
+    "test/retroachievements.test.ts": "5945cb4bd238de8366be15957861d399df8a893ebc822ea7696fb6c4816d9b2e",
+    "tsconfig.json": "e67d6d62d5af3c653c4d1af30dea94d529c721708e54bd8609d748be627e79e5"
+  }
 }
